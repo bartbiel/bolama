@@ -2,8 +2,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from pathlib import Path
-from props import TokenizerProps, ModelProps
-
+from props import TokenizerProps, ModelProps, ChatbotProps
+from pydantic import BaseModel
 
 import torch
 import grants
@@ -32,12 +32,9 @@ tokenizer = AutoTokenizer.from_pretrained(
     model_path,
     local_files_only=True  # Forces it to load locally, not from Hugging Face Hub
 )
-#TokenizerProps(tokenizer)
+TokenizerProps(tokenizer)
 
-# model = AutoModelForCausalLM.from_pretrained(
-#     Mistral_snapshot,
-#     local_files_only=True
-# )
+
 model = AutoModelForCausalLM.from_pretrained(
     Mistral_snapshot,
     local_files_only=True,
@@ -46,28 +43,29 @@ model = AutoModelForCausalLM.from_pretrained(
     low_cpu_mem_usage=True
 )
 ModelProps(model)
-# You can now use the tokenizer and model to create a pipeline
-#chatbot = pipeline("text-generation", model=model, tokenizer=tokenizer)
+
+chatbot = pipeline("text-generation", model=model, tokenizer=tokenizer)
+ChatbotProps(chatbot)
 
 
+class ChatRequest(BaseModel):
+    user_input: str  # Must match React's payload key
 
+@app.post("/chat")
+async def generate_text(request: ChatRequest):
+    try:
+        response = chatbot(
+            request.user_input,
+            max_length=100,
+            do_sample=True,
+            temperature=0.7,
+        )
+        return {"response": response[0]["generated_text"]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-
-# @app.post("/chat")
-# async def generate_text(user_input: str):
-#     try:
-#         response = chatbot(
-#             user_input,
-#             max_length=100,
-#             do_sample=True,
-#             temperature=0.7,
-#         )
-#         return {"response": response[0]["generated_text"]}
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
-
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 print ("=========================end========================================")

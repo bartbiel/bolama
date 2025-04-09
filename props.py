@@ -58,7 +58,7 @@ def ModelProps(model):
         print("\n=== Generation Config ===")
         print(model.generation_config)
 
-def print_chatbot_properties(chatbot):
+def ChatbotProps(chatbot):
     try:
         print("=== Pipeline Properties ===")
         print(f"Task: {getattr(chatbot, 'task', 'N/A')}")
