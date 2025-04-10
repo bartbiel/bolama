@@ -1,5 +1,7 @@
 # bolama
+<h2>Zero memory</h2>
 <br>Activated om my env .\myenv\Scripts\Activate
+<h3>Dependencies</h3>
 <br> pip install torch transformers
 <br> pip install dotenv 
 <br>pip install fastapi uvicorn sentencepiece accelerate
@@ -133,5 +135,8 @@
 <br>=== Tokenizer ===
 <br>Tokenizer: LlamaTokenizerFast
 
-
+<h2>Prompting</h2>
+<h3>Dependencies</h3>
+<br>pip install langchain
+<br>pip install langchain_community
  

@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 
 function App() {
-  const [messages, setMessages] = useState([]);
+  const [conversation, setConversation] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -11,25 +11,35 @@ function App() {
   // Auto-scroll to bottom of chat
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [conversation]);
 
   const handleSend = async () => {
+    if (!input.trim()) return;
+    
+    // Add user message to conversation
+    const userMessage = { type: 'user', content: input };
+    setConversation(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
     try {
       const response = await axios.post(
         'http://localhost:8000/chat',
-        { user_input: input },  // JSON body
+        { user_input: input },
         { headers: { 'Content-Type': 'application/json' } }
       );
-      // Add bot response to chat
-      setMessages(prev => [...prev, {
-        text: response.data.response,
-        sender: 'bot'
-      }]);
+      
+      // Add bot response to conversation
+      const botMessage = { type: 'bot', content: response.data.response };
+      setConversation(prev => [...prev, botMessage]);
     } catch (error) {
-      setMessages(prev => [...prev, {
-        text: `Error: ${error.response?.data?.detail?.[0]?.msg || 'Failed to send message'}`,
-        sender: 'bot'
-      }]);
+      const errorMessage = { 
+        type: 'bot', 
+        content: `Error: ${error.response?.data?.detail?.[0]?.msg || 'Failed to send message'}`
+      };
+      setConversation(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -44,15 +54,19 @@ function App() {
     <div className="app">
       <div className="chat-container">
         <div className="messages">
-          {messages.map((message, index) => (
-            <div key={index} className={`message ${message.sender}`}>
+          {conversation.map((message, index) => (
+            <div key={index} className={`message ${message.type}`}>
+              <div className="message-header">
+                {message.type === 'user' ? 'You' : 'AI Assistant'}
+              </div>
               <div className="message-content">
-                {message.text}
+                {message.content}
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="message bot">
+              <div className="message-header">AI Assistant</div>
               <div className="message-content typing-indicator">
                 <span></span>
                 <span></span>
