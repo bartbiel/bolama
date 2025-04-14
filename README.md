@@ -151,6 +151,13 @@
 <br>OpenAI ChatGPT API (as of April 2025) does not provide a direct endpoint or method to check the number of available tokens, remaining quota, or usage stats per user/account via the API itself.
 <h3>Deepseek</h3>
 <br>DeepSeek's API does not directly provide the number of remaining/available tokens for a user's account
+<h2>RAGs</h2>
+<br> RAGs implemented in <i>RAGs</i>
+<br><b>query</b>: "Find expert in the loop role"
+<br>Source: <i>co.pdf</i> and <i>res1.txt</i> from resources
+<h3>RAGs answer</h3>
+<br><img src="./resources/RAGs.JPG">
+
 
 
  
