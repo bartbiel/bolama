@@ -1,6 +1,5 @@
 # bolama
 <h2>Zero memory</h2>
-<br>Activated om my env .\myenv\Scripts\Activate
 <h3>Dependencies</h3>
 <br> pip install torch transformers
 <br> pip install dotenv 
@@ -134,9 +133,24 @@
 <br>
 <br>=== Tokenizer ===
 <br>Tokenizer: LlamaTokenizerFast
-
+<br><b>webChatBack.py</b> is used for zero-memory chat
+<br><img src="./resources/1.JPG">
 <h2>Prompting</h2>
 <h3>Dependencies</h3>
 <br>pip install langchain
 <br>pip install langchain_community
+<br><b>memChat.py</b> is used for a chat with memory
+<br><img src="./resources/2.JPG">
+<h2>Text summary</h2>
+<br><i>summaryBcknd</i> generates a summary and it's called in <i>loadsummary</i>
+<br><img src="./resources/summary.JPG">
+<h2>Tokens stats</h2>
+<br><i>tokensCalc</i> is used
+<br><img src="./resources/tokens.JPG">
+<h3>OpenAI</h3>
+<br>OpenAI ChatGPT API (as of April 2025) does not provide a direct endpoint or method to check the number of available tokens, remaining quota, or usage stats per user/account via the API itself.
+<h3>Deepseek</h3>
+<br>DeepSeek's API does not directly provide the number of remaining/available tokens for a user's account
+
+
  
