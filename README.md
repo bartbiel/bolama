@@ -157,6 +157,14 @@
 <br>Source: <i>co.pdf</i> and <i>res1.txt</i> from resources
 <h3>RAGs answer</h3>
 <br><img src="./resources/RAGs.JPG">
+<h2>FAISS</h2>
+<br><b>for FAISS <b>no sensivitive data is pushed to this repo</b>
+<br><i>faissSaver</i> saves embeddings in faiss_index
+<br><i>faissChat</i> is using saved embeddings for chat
+<br>Embeddings were fed by two files from resources: <i>co.pdf</i> and <i>res1.txt</i>. Both are regarding Gemini 2.0 co-scientist.
+<br><img src="./resources/faiss.JPG">  
+<br><h3>FAISS info</h3>
+<br><img src="./resources/faissinfo.JPG">
 
 
 

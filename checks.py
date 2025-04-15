@@ -13,4 +13,12 @@ def checkMistral(model_dir: str):
     else:
         print(f"The directory {model_dir} does not exist.")
 
-checkMistral(grants.Mistral_PATH)
+#checkMistral(grants.Mistral_PATH)
+
+def sqliteCheck():
+    import sqlite3
+    print(sqlite3.__file__)
+    
+sqliteCheck()
+
+
